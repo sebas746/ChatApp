@@ -36,10 +36,10 @@ namespace WebApp.Controllers
         [HttpPost]
         public JsonResult sendmsg(string message, string sentTo, string sender)
         {
-            WebAppService.SendMessage(message, sentTo, sender);
-            RabbitMQBll obj = new RabbitMQBll();
-            IConnection con = obj.GetConnection();
-            bool flag = obj.send(con, message, sentTo, sender);
+            var flag = WebAppService.SendMessage(message, sentTo, sender);
+            //RabbitMQBll obj = new RabbitMQBll();
+            //IConnection con = obj.GetConnection();
+            //bool flag = obj.send(con, message, sentTo, sender);
             return Json(null);
         }
         [HttpPost]

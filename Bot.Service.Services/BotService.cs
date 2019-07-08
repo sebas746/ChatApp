@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using WebApp.Domain.DataContext.WebApp;
 using WebApp.Domain.Interfaces.DAC;
 using WebApp.Domain.Interfaces.Service;
+using static WebApp.Domain.Entities.Util.Enumerators;
 
 namespace Bot.Service.Services
 {
@@ -71,6 +72,26 @@ namespace Bot.Service.Services
             }
 
             return null;
+        }
+
+        public string ParseStockItem(string parsedString)
+        {
+            var result = string.Empty;
+
+            if (parsedString != "")
+            {
+                var splittedString = parsedString.Split('\n');
+                if (splittedString.Length > 1)
+                {
+                    var splittedValues = splittedString[1].Split(',');
+                    if (splittedValues.Length > 2)
+                    {
+                        //Return the 
+                        result = splittedValues[(int)StockValues.Open];
+                    }
+                }
+            }
+            return result;
         }
 
         public HttpResponseMessage GetStockItem(string stockCode)

@@ -50,6 +50,10 @@
       <Project>{3A79776A-88ED-47F8-A9C1-658D0722CA11}</Project>
       <Name>WebApp.Domain.DataContext</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebApp.Domain.Entities\WebApp.Domain.Entities.csproj">
+      <Project>{8070BD56-CAC6-4C39-9C50-FE989B4DB025}</Project>
+      <Name>WebApp.Domain.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebApp.Domain.Interfaces\WebApp.Domain.Interfaces.csproj">
       <Project>{BF57B82A-F03E-4C0B-BF25-853E28064D1C}</Project>
       <Name>WebApp.Domain.Interfaces</Name>

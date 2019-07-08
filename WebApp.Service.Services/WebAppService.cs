@@ -16,12 +16,16 @@ namespace WebApp.Service.Services
     {
         public IWebAppDAC _WebAppDAC { get; set; }        
         private static HttpClient client = new HttpClient();
+        public IRabbitMQService _RabbitMQService { get; set; }
         public ConnectionStrings _ConnectionStrings { get; set; }
+        public IBotService _BotService { get; set; }
 
-        public WebAppService(IWebAppDAC WebAppDAC, ConnectionStrings ConnectionStrings)
+        public WebAppService(IWebAppDAC WebAppDAC, ConnectionStrings ConnectionStrings, RabbitMQService RabbitMQService, IBotService BotService)
         {
             this._WebAppDAC = WebAppDAC;            
             this._ConnectionStrings = ConnectionStrings;
+            this._RabbitMQService = RabbitMQService;
+            this._BotService = BotService;
         }
 
         public Users Login(string email, string password)
@@ -36,10 +40,12 @@ namespace WebApp.Service.Services
 
         public bool SendMessage(string message, string sentTo, string sender)
         {
-            var stockCode = GetStockCode(message);
+            var conn = _RabbitMQService.GetConnection();
+            var sendResult = _RabbitMQService.send(conn, message, sentTo, sender);
+            var stockCode = _BotService.GetStockCode(message);
             if(stockCode != "")
             {
-                
+                var stockItemResult = GetStockItemAsync(stockCode, sentTo, sender);
             }
 
             return true;
@@ -62,35 +68,25 @@ namespace WebApp.Service.Services
             }
         }
 
-        private string GetStockCode(string msg)
+        public string GetStockItemAsync(string stockCode, string sentTo, string sender)
         {
-            try
-            {
-                if (CheckMesaggeStockCode(msg))
-                {
-                    var botUrl = ConfigurationManager.AppSettings["stockApiUrl"].ToString();                    
-                    var stockcode = msg.Substring(msg.LastIndexOf('=') + 1);
-                    botUrl = botUrl.Replace("[stockCode]", stockcode);
-                    var stockResult = GetStockItemAsync(botUrl);
-                    return stockcode;
-                }
+            var path = _ConnectionStrings.BotApiUrl.Replace("[stockCode]", stockCode);
 
-                return null;
-            }
-            catch (Exception exc)
-            {
-                throw exc;
-            }
-        }
-
-        public string GetStockItemAsync(string path)
-        {
             var result = String.Empty;
             var response = client.GetAsync(path).Result;
             if (response.IsSuccessStatusCode)
             {
-                result = response.Content.ReadAsStringAsync().Result;
+                var apiResult = response.Content.ReadAsStringAsync().Result;
+                result = _BotService.ParseStockItem(apiResult);
             }
+
+            if(result != "")
+            {
+                var stockCommand = ConfigurationManager.AppSettings["BotResponseMsg"].ToString();
+                stockCommand = stockCommand.Replace("[stockCode]", stockCode).Replace("[open]", result);                
+                SendMessage(stockCommand, sender, "System BOT");
+            }
+
             return result;
         }
     }

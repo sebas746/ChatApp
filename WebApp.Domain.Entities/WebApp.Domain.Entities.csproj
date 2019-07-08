@@ -45,6 +45,7 @@
     <Compile Include="ConnectionStrings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserModel.cs" />
+    <Compile Include="Util\Enumerators.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

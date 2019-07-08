@@ -12,5 +12,7 @@ namespace WebApp.Domain.Interfaces.Service
     public interface IBotService
     {
         HttpResponseMessage GetStockItem(string stockCode);
+        string GetStockCode(string msg);
+        string ParseStockItem(string parsedString);
     }
 }

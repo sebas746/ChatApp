@@ -12,6 +12,6 @@ namespace WebApp.Domain.Interfaces.Service
         Users Login(string email, string password);
         List<Users> GetUsers(int userId);
         bool SendMessage(string message, string sentTo, string sender);
-        string GetStockItemAsync(string path);
+        string GetStockItemAsync(string stockCode, string sentTo, string sender);
     }
 }
