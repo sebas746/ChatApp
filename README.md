@@ -11,11 +11,6 @@ Please clone the site and build the site.
 Install RabbitMQ broker client.
 Create BD in SQL Server named "ChatDB".
 
-
-```
-Give examples
-```
-
 ### Installing
 
 1. Restore database backup named "DatabaseBackup".
