@@ -19,6 +19,7 @@ namespace WebApp.Controllers
         public ActionResult Index()
         {
             return RedirectToAction("../Chat");
+            // return View();
         }
     }
 }

@@ -9,9 +9,13 @@ using System.Web.UI.WebControls;
 using WebApp.Models;
 using WebApp.Domain.DataContext.WebApp;
 using WebApp.Domain.Interfaces.Service;
+using System.Web.Security;
+using System.Data;
+using WebApp.Domain.Entities;
 
 namespace WebApp.Controllers
 {
+    [CustomAuthorize]
     public class ChatController : Controller
     {
         public IWebAppService WebAppService { get; set; }       
@@ -21,11 +25,12 @@ namespace WebApp.Controllers
         }
 
         // GET: Home  
+        //[Authorize]
         public ActionResult Index()
         {
             if (Session["userid"] == null)
             {
-                return RedirectToAction("login");
+                return RedirectToAction("login", "Account");
             }
             else
             {
@@ -71,13 +76,13 @@ namespace WebApp.Controllers
         {
             string email = fc["txtemail"].ToString();
             string password = fc["txtpassword"].ToString();
-            Users user = WebAppService.Login(email, password);
-            if (user.UserID > 0)
+            User user = WebAppService.Login(email, password);
+            if (user.UserId > 0)
             {
                 ViewData["status"] = 1;
                 ViewData["msg"] = "login Successful...";
                 Session["username"] = user.Email;
-                Session["userid"] = user.UserID.ToString();
+                Session["userid"] = user.UserId.ToString();
                 return RedirectToAction("Index");
             }
             else
@@ -94,7 +99,7 @@ namespace WebApp.Controllers
         public JsonResult friendlist()
         {
             int id = Convert.ToInt32(Session["userid"].ToString());
-            List<Users> users = WebAppService.GetUsers(id);
+            List<User> users = WebAppService.GetUsers(id);
             List<ListItem> userlist = new List<ListItem>();
             foreach (var item in users)
             {

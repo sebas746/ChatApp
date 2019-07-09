@@ -16,14 +16,13 @@ namespace WebApp.Dac.Test.Builders
         static string userfullName = "Juan Sebastian Ortegon";
         static int userid = 1;
 
-        public static Users BuildUser()
+        public static User BuildUser()
         {
-            return new Users
+            return new User
             {
-                Email = useremail,
-                FullName = userfullName,
+                Email = useremail,                
                 Password = userpassword,
-                UserID = userid
+                UserId = userid
             };
         }
 

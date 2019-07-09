@@ -15,7 +15,7 @@ namespace WebApp.Dac.Test
     {
         //Arrange        
         private ConnectionStrings connectionStrings;
-        private Users loggedInUser;
+        private User loggedInUser;
         private Mock<IWebAppDAC> WebAppDacMock;
         private WebAppDAC webAppDAC;
 
@@ -48,9 +48,9 @@ namespace WebApp.Dac.Test
             var invalidUserResult = webAppDAC.Login(loggedInUser.Email, "123");
 
             //Assert
-            Assert.IsTrue(validUserResult.UserID > 0);
+            Assert.IsTrue(validUserResult.UserId > 0);
             Assert.IsNotNull(validUserResult);            
-            Assert.IsTrue(invalidUserResult.UserID == 0);
+            Assert.IsTrue(invalidUserResult.UserId == 0);
             Assert.IsNotNull(invalidUserResult);
         }
 
@@ -58,7 +58,7 @@ namespace WebApp.Dac.Test
         public void GetUsersTest()
         {
             //Act
-            var validGetUsersTest = webAppDAC.GetUsers(loggedInUser.UserID);            
+            var validGetUsersTest = webAppDAC.GetUsers(loggedInUser.UserId);            
 
             //Assert
             Assert.IsTrue(validGetUsersTest.Count > 0);

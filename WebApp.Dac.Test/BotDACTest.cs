@@ -16,7 +16,7 @@ namespace WebApp.Dac.Test
     {
         //Arrange        
         private ConnectionStrings connectionStrings;
-        private Users loggedInUser;
+        private User loggedInUser;
         private Stock stock;
         private Mock<IBotDAC> IBotMockDAC;
         private BotDAC botDAC;

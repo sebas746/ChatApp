@@ -10,7 +10,7 @@ namespace WebApp.Domain.Interfaces.DAC
 {
     public interface IWebAppDAC
     {
-        Users Login(string email, string password);
-        List<Users> GetUsers(int userId);
+        User Login(string email, string password);
+        List<User> GetUsers(int userId);
     }
 }

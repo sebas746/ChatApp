@@ -19,7 +19,7 @@ namespace WebApp.DAC
             this.ConnectionStrings = ConnectionStrings;
         }
 
-        public Users Login(string email, string password)
+        public User Login(string email, string password)
         {
             using (WebAppDataContext db = new WebAppDataContext())
             {
@@ -31,24 +31,21 @@ namespace WebApp.DAC
                 }
                 else
                 {
-                    return new Users()
+                    return new User()
                     {
                         Email = "",
-                        FullName = "",
-                        Password = "",
-                        Mobile = "",
-                        UserID = 0
+                        Password = ""                        
                     };
                 }
                 
             }
         }
 
-        public List<Users> GetUsers(int userId)
+        public List<User> GetUsers(int userId)
         {
             using (WebAppDataContext db = new WebAppDataContext())
             {
-                var response = db.Users.Where(x => x.UserID != userId);
+                var response = db.Users.Where(x => x.UserId != userId);
 
                 return response.ToList();
             }

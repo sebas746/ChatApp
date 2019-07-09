@@ -28,12 +28,12 @@ namespace WebApp.Service.Services
             this._BotService = BotService;
         }
 
-        public Users Login(string email, string password)
+        public User Login(string email, string password)
         {
             return _WebAppDAC.Login(email, password);
         }
 
-        public List<Users> GetUsers(int userId)
+        public List<User> GetUsers(int userId)
         {
             return _WebAppDAC.GetUsers(userId);
         }

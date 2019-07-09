@@ -9,8 +9,8 @@ namespace WebApp.Domain.Interfaces.Service
 {
     public interface IWebAppService
     {
-        Users Login(string email, string password);
-        List<Users> GetUsers(int userId);
+        User Login(string email, string password);
+        List<User> GetUsers(int userId);
         bool SendMessage(string message, string sentTo, string sender);
         string GetStockItemAsync(string stockCode, string sentTo, string sender);
     }

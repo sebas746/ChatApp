@@ -16,16 +16,25 @@ namespace WebApp.Domain.DataContext.WebApp
         {
         }
 
-        public virtual DbSet<Users> Users { get; set; }
+        //public virtual DbSet<Users> Users { get; set; }
 
         public virtual DbSet<Stock> Stock { get; set; }
-        
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Users>()
-               .Property(e => e.FullName)
-               .IsUnicode(false);
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Roles)
+                .WithMany(r => r.Users)
+                .Map(m =>
+                {
+                    m.ToTable("UserRoles");
+                    m.MapLeftKey("UserId");
+                    m.MapRightKey("RoleId");
+                });
         }
     }
 }
