@@ -21,6 +21,9 @@ Create BD in SQL Server named "ChatDB".
 
 ```
 1. Restore database backup named "DatabaseBackup".
+2. Update the Web.Config file for the following parameters.
+  - Connectionstring WebAppDataContext. Use the right parameters for the Database connection.
+  - stockApiUrl: You need to update the url of the Web Api Service for getting the quote for one stock item.
 ```
 ```
 2. Run the .net Project.
